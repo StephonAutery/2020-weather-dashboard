@@ -7,7 +7,7 @@ $(function () {
   let lon = "";
   var cityName;
   var cityList;
-  var varCitySearch;
+  // var varCitySearch = "";
   var queryURLuV = "";
   var queryURLHourly = "";
   // var cityArray = ["raleigh", "durham", "winston salem", "austin", "san francisco", "san leandro"];
@@ -92,22 +92,21 @@ $(function () {
   // data section
   function storeData() {
     cityArray = JSON.parse(localStorage.getItem("city-list"));
-    cityArray.push(varCitySearch);
+    // cityArray.push(varCitySearch);
     console.log(cityArray + " ...cityArray|storeData");
     localStorage.setItem("city-list", JSON.stringify(cityArray));
     drawCities();
   }
 
-  function drawCities(){
+  function drawCities() {
     cityArray = JSON.parse(localStorage.getItem("city-list"));
     console.log(cityArray + " ..drawCities");
-          var newP = $("<p></p>");
-    for(let i=0; i < cityArray.length; i++){
-
-      newP.val(cityArray[i]);
-      console.log(cityArray[i]);
-      $("#city-list").prepend(newP);
-    }
+    // var newP = $("<p></p>");
+    // for (let i = 0; i < cityArray.length; i++) {
+    //   newP.val(cityArray[i]);
+    //   console.log(cityArray[i]);
+    //   $("#city-list").prepend(newP);
+    // }
   }
 
   function getStorage() {
