@@ -79,9 +79,19 @@ $(function () {
       if (dateStart.search("00:00:00")) {
         // console.log(dateStart);
         $("#tiles").append(
-          '<div class="col-2-xs m-2 text-left p-2 rounded bg-primary"><p>' + dailyW[i].dt_txt + '</p><p><img src="./images/' + dailyW[i].weather[0].icon + '@2x.png"></p><p>temp: ' + dailyW[i].main.temp +  '</p><p>humidity: ' + dailyW[i].main.humidity + '</p></div>'
+          '<div class="col-2-xs m-2 text-left p-2 rounded bg-primary"><p>' + dailyW[i].dt_txt + '</p><p><img src="./images/' + dailyW[i].weather[0].icon + '@2x.png"></p><p>temp: ' + dailyW[i].main.temp + '</p><p>humidity: ' + dailyW[i].main.humidity + '</p></div>'
         );
       }
+    }
+  }
+
+  function checkStorage() {
+    if (localStorage.length === 0) {
+      return false;
+      console.log("there's nothing here.")
+    } else {
+      console.log("found it!")
+      return true;
     }
   }
 
