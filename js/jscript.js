@@ -6,8 +6,12 @@ $(function () {
   let lat = "";
   let lon = "";
   var cityName;
+  var cityList;
+  var varCitySearch;
   var queryURLuV = "";
   var queryURLHourly = "";
+  // var cityArray = ["raleigh", "durham", "winston salem", "austin", "san francisco", "san leandro"];
+  var cityArray = [];
 
   async function init(queryURL) {
     var apiResponse;
@@ -64,9 +68,9 @@ $(function () {
   }
 
   function showForcastData(apiResponseForcast) {
-    console.log("--------- forcast data");
-    console.log(apiResponseForcast.city.name);
-    console.log(apiResponseForcast);
+    // console.log("--------- forcast data");
+    // console.log(apiResponseForcast.city.name);
+    // console.log(apiResponseForcast);
     // stuff the dailyW variable full of the daily forcast data
     var dailyW = apiResponseForcast.list;
     var dateStart;
@@ -85,22 +89,48 @@ $(function () {
     }
   }
 
+  // data section
+  function storeData() {
+    cityArray = JSON.parse(localStorage.getItem("city-list"));
+    cityArray.push(varCitySearch);
+    console.log(cityArray + " ...cityArray|storeData");
+    localStorage.setItem("city-list", JSON.stringify(cityArray));
+    drawCities();
+  }
+
+  function drawCities(){
+    cityArray = JSON.parse(localStorage.getItem("city-list"));
+    console.log(cityArray + " ..drawCities");
+          var newP = $("<p></p>");
+    for(let i=0; i < cityArray.length; i++){
+
+      newP.val(cityArray[i]);
+      console.log(cityArray[i]);
+      $("#city-list").prepend(newP);
+    }
+  }
+
+  function getStorage() {
+    cityArray = JSON.parse(localStorage.getItem("city-list"));
+    console.log(cityArray + " ...getStorage");
+  }
+
   function checkStorage() {
     if (localStorage.length === 0) {
       return false;
-      console.log("there's nothing here.")
     } else {
-      console.log("found it!")
+      getStorage();
+      drawCities()
       return true;
     }
   }
 
+  checkStorage();
   init(queryURL);
 
   $("#submit").on("click", function (event) {
     varCitySearch = $("#city-input").val();
     var queryURL = 'https://api.openweathermap.org/data/2.5/weather?q=' + varCitySearch + '&appid=630f6b0a5dd5632e93ad38bae7f3f14b';
-
     async function initI(queryURL) {
       var apiResponse;
       function API() {
@@ -109,13 +139,10 @@ $(function () {
           method: "GET"
         })
       }
+      storeData();
       apiResponse = await API();
       init(queryURL);
     }
     initI(queryURL);
   })
-
-  console.log(lat + " ..");
-  console.log(lon + " ..");
-
 }); 
