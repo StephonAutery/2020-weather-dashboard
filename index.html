@@ -24,26 +24,24 @@
       <h4><p>let's begin here ...</p></h4>
     </header>
 
-    <main class="container text-left p-3">
+    <main class="container text-left">
 
       <section id="city-search" class="col-3 text-left float-left bg-light">
-
-        <div class="row">
-          <input type="text" placeholder="city search" />
-          <button id="submit" class="btn btn-primary text-left">search</button>
+        <div class="row p-3">
+          <input id="city-input" type="text" placeholder="city search"/>
+          <button id="submit" class="btn-primary text-left">go</button>
         </div>
 
         <div class="row">
           <div class="col-12">
-            <p>raleigh</p>
-            <p>durham</p>
-            <p>winston salem</p>
-            <p>austin</p>
-            <p>san francisco</p>
-            <p>san leandro</p>
+            <p class="p-2 m-1 bg-white">raleigh</p>
+            <p class="p-2 m-1 bg-white">durham</p>
+            <p class="p-2 m-1 bg-white">winston salem</p>
+            <p class="p-2 m-1 bg-white">austin</p>
+            <p class="p-2 m-1 bg-white">san francisco</p>
+            <p class="p-2 m-1 bg-white">san leandro</p>
           </div>
         </div>
-
       </section>
 
       <section id="right" class="col-9 float-left">
@@ -53,7 +51,7 @@
             <p id="date">date</p>
             <p id="humidity"></p>
             <p id="wind-speed"></p>
-            <p id="uv"></p>
+            <p>uv index:<span id="uv"></span></p>
           </div>
         </div>
         <div id="five-day" class="row text-left p-t-3">
