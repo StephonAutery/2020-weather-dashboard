@@ -7,6 +7,7 @@ $(function () {
   let lon = "";
   var cityName;
   var cityList;
+
   // var varCitySearch = "";
   var queryURLuV = "";
   var queryURLHourly = "";
@@ -64,7 +65,8 @@ $(function () {
 
   function showUVData(apiResponseUv) {
     $("#uv").text(apiResponseUv.value);
-    $("#uv").attr("class", "bg-danger");
+    $("#uv").attr("class", "bg-danger rounded p-1");
+    // $("#uv").attr("class", "rounded");
   }
 
   function showForcastData(apiResponseForcast) {
@@ -76,7 +78,7 @@ $(function () {
     var dateStart;
     $("#tiles").empty();
     $("#date").text(dailyW[0].dt_txt);
-    for (let i = 1; i <= 25; i++) {
+    for (let i = 0; i <= dailyW.length - 8; i = i + 8) {
       dateStart = dailyW[i].dt_txt;
       // console.log(dateStart + " ....");
       dateStart = toString(dateStart);
@@ -90,42 +92,63 @@ $(function () {
   }
 
   // data section
-  function storeData() {
-    cityArray = JSON.parse(localStorage.getItem("city-list"));
-    // cityArray.push(varCitySearch);
-    console.log(cityArray + " ...cityArray|storeData");
-    localStorage.setItem("city-list", JSON.stringify(cityArray));
-    drawCities();
-  }
+  // function storeData() {
+  //   if (JSON.parse(localStorage.getItem("city-list"))) {
+  //     cityArray = JSON.parse(localStorage.getItem("city-list"));
+  //     cityArray.push(varCitySearch);
+  //     localStorage.setItem("city-list", JSON.stringify(cityArray));
+  //   } else
+  //     console.log(cityArray + " ...cityArray|storeData");
+  //   drawCities();
+  // }
 
   function drawCities() {
-    cityArray = JSON.parse(localStorage.getItem("city-list"));
-    console.log(cityArray + " ..drawCities");
-    // var newP = $("<p></p>");
-    // for (let i = 0; i < cityArray.length; i++) {
-    //   newP.val(cityArray[i]);
-    //   console.log(cityArray[i]);
-    //   $("#city-list").prepend(newP);
+    console.log(cityArray + " --before");
+    if (localStorage.length > 0) {
+      console.log("draw cities - if");
+      cityArray = JSON.parse(localStorage.getItem("city-list"));
+      cityArray.push(varCitySearch);
+      localStorage.setItem("city-list", JSON.stringify(cityArray));
+      var newP = $("<p></p>");
+      for (let i = 0; i < cityArray.length; i++) {
+        newP.val(cityArray[i]);
+        $("#list-cities").append(newP);
+      }
+    } else {
+      console.log("draw cities - else");
+      cityArray.push(varCitySearch);
+      localStorage.setItem("city-list", JSON.stringify(cityArray));
+      var newP = $("<p></p>");
+      for (let i = 0; i < cityArray.length; i++) {
+        newP.val(cityArray[i]);
+        console.log(cityArray[i]);
+        $("#list-cities").append(newP);
+      }
+    }
+    console.log(cityArray + " --after");
+  }
+  // function getStorage() {
+    // if (JSON.parse(localStorage.getItem("city-list"))) {
+    // cityArray = JSON.parse(localStorage.getItem("city-list"))
+    // cityArray.push(varCitySearch);
+    // localStorage.setItem("city-list", JSON.stringify(cityArray));
+    // console.log(cityArray);
     // }
-  }
-
-  function getStorage() {
-    cityArray = JSON.parse(localStorage.getItem("city-list"));
-    console.log(cityArray + " ...getStorage");
-  }
+    // console.log(cityArray + " ... getStorage - 124");
+  // }
 
   function checkStorage() {
     if (localStorage.length === 0) {
       return false;
     } else {
-      getStorage();
+      // getStorage();
       drawCities()
       return true;
     }
   }
 
-  checkStorage();
   init(queryURL);
+  // checkStorage();
 
   $("#submit").on("click", function (event) {
     varCitySearch = $("#city-input").val();
@@ -138,9 +161,11 @@ $(function () {
           method: "GET"
         })
       }
-      storeData();
+      varCitySearch = $("#city-input").val();
       apiResponse = await API();
       init(queryURL);
+      drawCities();
+      // storeData();
     }
     initI(queryURL);
   })
