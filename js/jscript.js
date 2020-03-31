@@ -81,60 +81,38 @@ $(function () {
     }
   }
 
-  // data section
-  // function storeData() {
-  //   if (JSON.parse(localStorage.getItem("city-list"))) {
-  //     cityArray = JSON.parse(localStorage.getItem("city-list"));
-  //     cityArray.push(varCitySearch);
-  //     localStorage.setItem("city-list", JSON.stringify(cityArray));
-  //   } else
-  //     console.log(cityArray + " ...cityArray|storeData");
-  //   drawCities();
-  // }
-
   function drawCities() {
-    console.log(cityArray + " --before");
     if (localStorage.length > 0) {
-      console.log("draw cities - if");
       cityArray = JSON.parse(localStorage.getItem("city-list"));
       cityArray.push(varCitySearch);
       localStorage.setItem("city-list", JSON.stringify(cityArray));
-      var newP = $("<p></p>");
+      $("#list-cities").empty();
       for (let i = 0; i < cityArray.length; i++) {
+        var newP = $("<p></p>");
         newP.text(cityArray[i]);
         newP.attr("class", "p-2 m-1 bg-white");
         $("#list-cities").append(newP);
       }
     } else {
-      console.log("draw cities - else");
       cityArray.push(varCitySearch);
       localStorage.setItem("city-list", JSON.stringify(cityArray));
-      var newP = $("<p></p>");
+      $("#list-cities").empty();
       for (let i = 0; i < cityArray.length; i++) {
+        var newP = $("<p></p>");
         newP.text(cityArray[i]);
-        console.log(cityArray[i]);
         $("#list-cities").append(newP);
       }
     }
-    console.log(cityArray + " --after");
   }
-  // function getStorage() {
-  // if (JSON.parse(localStorage.getItem("city-list"))) {
-  // cityArray = JSON.parse(localStorage.getItem("city-list"))
-  // cityArray.push(varCitySearch);
-  // localStorage.setItem("city-list", JSON.stringify(cityArray));
-  // console.log(cityArray);
-  // }
-  // console.log(cityArray + " ... getStorage - 124");
-  // }
-
+  
   function checkStorage() {
     if (localStorage.length === 0) {
       return false;
     } else {
       cityArray = JSON.parse(localStorage.getItem("city-list"));
-      var newP = $("<p></p>");
+      $("#list-cities").empty();
       for (let i = 0; i < cityArray.length; i++) {
+        var newP = $("<p></p>");
         newP.text(cityArray[i]);
         newP.attr("class", "p-2 m-1 bg-white");
         $("#list-cities").append(newP);
