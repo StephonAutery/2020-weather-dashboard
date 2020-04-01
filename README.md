@@ -17,7 +17,7 @@ css, javascript, bootstrap CDN and JQuery are used to create a quiz.
 - [GitHub](https://github.com/) - hosts repository that can be deployed to GitHub Pages
 
 ## Summary 
-this application generates a random password based on the user's specifications.
+a weather dashboard for whatever locale you choose.
 
 ## Code Snippet
 where the work gets done.

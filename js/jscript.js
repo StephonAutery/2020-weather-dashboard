@@ -111,6 +111,7 @@ $(function () {
       for (let i = 0; i < cityArray.length; i++) {
         var newP = $("<p></p>");
         newP.text(cityArray[i]);
+        newP.attr("class", "btn btn-primary p-2 m-1");
         $("#list-cities").append(newP);
       }
     }
