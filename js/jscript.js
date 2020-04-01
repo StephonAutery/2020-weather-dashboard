@@ -78,15 +78,12 @@ $(function () {
     var dailyW = apiResponseForcast.list;
     var dateStart;
     $("#tiles").empty();
-    
     var date = new Date(dailyW[0].dt_txt);
     var varDate = date.toLocaleDateString();
     $("#date").text(varDate);
     for (let i = 0; i <= dailyW.length - 8; i = i + 8) {
-
       date = new Date(dailyW[i].dt_txt);
       varDate = date.toLocaleDateString();
-
         $("#tiles").append(
           '<div class="col-2-xs m-2 text-left p-2 rounded bg-primary"><p>' + varDate + '</p><p class="p-b-0"><img src="./images/' + dailyW[i].weather[0].icon + '@2x.png"></p><p>temp: ' + dailyW[i].main.temp + '</p><p>humidity: ' + dailyW[i].main.humidity + '</p></div>'
         );
