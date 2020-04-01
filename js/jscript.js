@@ -11,14 +11,20 @@ $(function () {
   var queryURLHourly = "";
   var cityArray = [];
 
+  // const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+  // console.log(event.toLocaleDateString(undefined, options));
+  // expected output: Thursday, December 20, 2012 (varies according to default locale)
+
   async function init(queryURL) {
     var apiResponse;
+
     function API() {
       return $.ajax({
         url: queryURL,
         method: "GET"
       })
     }
+
     apiResponse = await API();
     showCityWeather(apiResponse);
     initUv();
@@ -27,6 +33,7 @@ $(function () {
 
   async function initUv() {
     queryURLuV = 'https://api.openweathermap.org/data/2.5/uvi?&units-imperial&appid=630f6b0a5dd5632e93ad38bae7f3f14b&lat=' + lat + '&lon=' + lon + '';
+
     var apiResponseUv;
     function API() {
       return $.ajax({
@@ -57,6 +64,8 @@ $(function () {
     $("#wind-speed").text("wind speed: " + apiResponseHour.wind.speed);
     lat = apiResponseHour.coord.lat;
     lon = apiResponseHour.coord.lon;
+    console.log(lat);
+    console.log(lon);
     initUv();
   }
 
@@ -69,28 +78,34 @@ $(function () {
     var dailyW = apiResponseForcast.list;
     var dateStart;
     $("#tiles").empty();
+
+
+    // expected output: Thursday, December 20, 2012 (varies according to default locale)
+
     $("#date").text(dailyW[0].dt_txt);
     for (let i = 0; i <= dailyW.length - 8; i = i + 8) {
-      dateStart = dailyW[i].dt_txt;
-      dateStart = toString(dateStart);
-      if (dateStart.search("00:00:00")) {
+
+      var date = new Date(dailyW[i].dt_txt);
+      var varDate = date.toLocaleDateString();
+
         $("#tiles").append(
-          '<div class="col-2-xs m-2 text-left p-2 rounded bg-primary"><p>' + dailyW[i].dt_txt + '</p><p><img src="./images/' + dailyW[i].weather[0].icon + '@2x.png"></p><p>temp: ' + dailyW[i].main.temp + '</p><p>humidity: ' + dailyW[i].main.humidity + '</p></div>'
+          '<div class="col-2-xs m-2 text-left p-2 rounded bg-primary"><p>' + varDate + '</p><p class="p-b-0"><img src="./images/' + dailyW[i].weather[0].icon + '@2x.png"></p><p>temp: ' + dailyW[i].main.temp + '</p><p>humidity: ' + dailyW[i].main.humidity + '</p></div>'
         );
-      }
     }
   }
 
+  // draw the cicties list in the search window
   function drawCities() {
     if (localStorage.length > 0) {
+      $("#city-input").val("");
       cityArray = JSON.parse(localStorage.getItem("city-list"));
       cityArray.push(varCitySearch);
       localStorage.setItem("city-list", JSON.stringify(cityArray));
       $("#list-cities").empty();
       for (let i = 0; i < cityArray.length; i++) {
-        var newP = $("<p></p>");
+        var newP = $("<button></button>");
         newP.text(cityArray[i]);
-        newP.attr("class", "p-2 m-1 bg-white");
+        newP.attr("class", "btn btn-primary p-2 m-1");
         $("#list-cities").append(newP);
       }
     } else {
@@ -104,7 +119,7 @@ $(function () {
       }
     }
   }
-  
+
   function checkStorage() {
     if (localStorage.length === 0) {
       return false;
