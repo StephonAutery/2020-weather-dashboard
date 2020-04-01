@@ -5,10 +5,10 @@ $(function () {
   var queryURL = 'https://api.openweathermap.org/data/2.5/weather?q=' + varCitySearch + '&appid=630f6b0a5dd5632e93ad38bae7f3f14b';
   let lat = "";
   let lon = "";
-  var cityName;
-  var cityList;
+  // var cityName;
+  // var cityList;
   var queryURLuV = "";
-  var queryURLHourly = "";
+  // var queryURLHourly = "";
   var cityArray = [];
 
   // const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
@@ -78,15 +78,14 @@ $(function () {
     var dailyW = apiResponseForcast.list;
     var dateStart;
     $("#tiles").empty();
-
-
-    // expected output: Thursday, December 20, 2012 (varies according to default locale)
-
-    $("#date").text(dailyW[0].dt_txt);
+    
+    var date = new Date(dailyW[0].dt_txt);
+    var varDate = date.toLocaleDateString();
+    $("#date").text(varDate);
     for (let i = 0; i <= dailyW.length - 8; i = i + 8) {
 
-      var date = new Date(dailyW[i].dt_txt);
-      var varDate = date.toLocaleDateString();
+      date = new Date(dailyW[i].dt_txt);
+      varDate = date.toLocaleDateString();
 
         $("#tiles").append(
           '<div class="col-2-xs m-2 text-left p-2 rounded bg-primary"><p>' + varDate + '</p><p class="p-b-0"><img src="./images/' + dailyW[i].weather[0].icon + '@2x.png"></p><p>temp: ' + dailyW[i].main.temp + '</p><p>humidity: ' + dailyW[i].main.humidity + '</p></div>'
@@ -139,6 +138,7 @@ $(function () {
   init(queryURL);
   checkStorage();
   $("#submit").on("click", function (event) {
+    event.preventDefault();
     varCitySearch = $("#city-input").val();
     var queryURL = 'https://api.openweathermap.org/data/2.5/weather?q=' + varCitySearch + '&appid=630f6b0a5dd5632e93ad38bae7f3f14b';
     async function initI(queryURL) {
