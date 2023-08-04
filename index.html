@@ -23,19 +23,9 @@
     </header>
 
     <main class="container text-left">
-
       <section id="city-search" class="col-3 text-left float-left bg-light">
         <form>
-
-          <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="City Search" aria-label="Recipient's username" aria-describedby="button-addon2" />
-            <div class="input-group-append">
-              <button class="btn btn-primary" type="button" id="button-addon2">
-                <i class="glyphicon glyphicon-search"></i></button>
-            </div>
-          </div>
-
-          <div class="input-group p-3">
+          <div class="input-group pt-3">
             <input
               id="city-input"
               type="text"
@@ -44,12 +34,11 @@
             />
           </div>
 
-          <div class="input-group-btn">
+          <div class="input-group-btn py-3">
             <button id="submit" class="btn btn-primary" type="submit">
-              <i class="glyphicon glyphicon-search"></i>
+              <i class="glyphicon glyphicon-search">Search</i>
             </button>
           </div>
-
         </form>
 
         <div class="row">
@@ -57,14 +46,14 @@
         </div>
       </section>
 
-      <section id="right" class="col-9 float-left">  
+      <section id="right" class="col-9 float-left">
         <div id="city" class="row text-left">
           <div class="col-12">
             <h4><p id="city-name">city</p></h4>
             <p id="date">date</p>
             <p id="humidity"></p>
             <p id="wind-speed"></p>
-            <p>uv index:<span id="uv"></span></p>
+            <p>uv index: <span id="uv"></span></p>
           </div>
         </div>
 
@@ -80,7 +69,6 @@
           </div>
         </div>
       </section>
-
     </main>
 
     <footer class="footer footer-copyright page-footer text-center">

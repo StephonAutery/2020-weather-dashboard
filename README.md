@@ -1,25 +1,31 @@
 # 2020-weather-dashboard
+
 a weather dashboard that will run in the browser and feature dynamically updated HTML and CSS.
+
 # a timed quiz
 
 css, javascript, bootstrap CDN and JQuery are used to create a quiz.
 
 ## Site Picture
+
 ![Site](/images/weather-snap.PNG)
 
-
 ## Technologies Used
-* [HTML](https://developer.mozilla.org/en-US/docs/Web/HTML)
-* [CSS](https://developer.mozilla.org/en-US/docs/Web/CSS)
-* [javaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
-* [bootstrap cdn](https://getbootstrap.com/docs/4.0/getting-started/introduction/)
-- [GitLab](https://gitlab.com/) - version control system to track changes to source code
-- [GitHub](https://github.com/) - hosts repository that can be deployed to GitHub Pages
 
-## Summary 
+- [HTML](https://developer.mozilla.org/en-US/docs/Web/HTML)
+- [CSS](https://developer.mozilla.org/en-US/docs/Web/CSS)
+- [javaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+- [bootstrap cdn](https://getbootstrap.com/docs/4.0/getting-started/introduction/)
+
+* [GitLab](https://gitlab.com/) - version control system to track changes to source code
+* [GitHub](https://github.com/) - hosts repository that can be deployed to GitHub Pages
+
+## Summary
+
 a weather dashboard for whatever locale you choose.
 
 ## Code Snippet
+
 where the work gets done.
 
 ```javaScript
@@ -54,15 +60,17 @@ function getAnswers(event) {
 
 ## Deployed Link
 
-* [see live site](https://stephonautery.github.io/2020-stephon-autery-a-timed-quiz/)
-* [github repository](https://github.com/StephonAutery/2020-stephon-autery-a-timed-quiz)
+https://stephonautery.github.io/2020-weather-dashboard/
+
+- [see live site](https://stephonautery.github.io/2020-weather-dashboard)
+- [github repository](https://github.com/StephonAutery/2020-weather-dashboard)
 
 ## Authors
 
-* **Stephon Autery** 
+- **Stephon Autery**
 
-- [link to portfolio Site](https://github.com/StephonAutery)
-- [link to LinkedIn](https://www.linkedin.com/in/stephon-a-1bb575198/)
+* [link to portfolio Site](https://github.com/StephonAutery)
+* [link to LinkedIn](https://www.linkedin.com/in/stephon-a-1bb575198/)
 
 ## License
 
@@ -72,4 +80,4 @@ images: copyright Stephon Autery
 
 ## Acknowledgments
 
-* UCBerkeley Coding Bootcamp is still Awesome!
+- UCBerkeley Coding Bootcamp is still Awesome!

@@ -1,19 +1,13 @@
-
 $(function () {
-
-  varCitySearch = "san leandro";
-  var queryURL = 'https://api.openweathermap.org/data/2.5/weather?q=' + varCitySearch + '&appid=630f6b0a5dd5632e93ad38bae7f3f14b';
+  let varCitySearch = "Oakland";
+  let queryURL =
+    "https://api.openweathermap.org/data/2.5/weather?q=" +
+    varCitySearch +
+    "&appid=630f6b0a5dd5632e93ad38bae7f3f14b";
   let lat = "";
   let lon = "";
-  // var cityName;
-  // var cityList;
-  var queryURLuV = "";
-  // var queryURLHourly = "";
-  var cityArray = [];
-
-  // const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-  // console.log(event.toLocaleDateString(undefined, options));
-  // expected output: Thursday, December 20, 2012 (varies according to default locale)
+  let queryURLuV = "";
+  let cityArray = [];
 
   async function init(queryURL) {
     var apiResponse;
@@ -21,10 +15,9 @@ $(function () {
     function API() {
       return $.ajax({
         url: queryURL,
-        method: "GET"
-      })
+        method: "GET",
+      });
     }
-
     apiResponse = await API();
     showCityWeather(apiResponse);
     initUv();
@@ -32,27 +25,35 @@ $(function () {
   }
 
   async function initUv() {
-    queryURLuV = 'https://api.openweathermap.org/data/2.5/uvi?&units-imperial&appid=630f6b0a5dd5632e93ad38bae7f3f14b&lat=' + lat + '&lon=' + lon + '';
+    queryURLuV =
+      "https://api.openweathermap.org/data/2.5/uvi?&units-imperial&appid=630f6b0a5dd5632e93ad38bae7f3f14b&lat=" +
+      lat +
+      "&lon=" +
+      lon +
+      "";
 
     var apiResponseUv;
     function API() {
       return $.ajax({
         url: queryURLuV,
-        method: "GET"
-      })
+        method: "GET",
+      });
     }
     apiResponseUv = await API();
     showUVData(apiResponseUv);
   }
 
   async function initForcast() {
-    queryURLforcast = 'https://api.openweathermap.org/data/2.5/forecast?q=' + varCitySearch + '&units=imperial&appid=630f6b0a5dd5632e93ad38bae7f3f14b';
+    queryURLforcast =
+      "https://api.openweathermap.org/data/2.5/forecast?q=" +
+      varCitySearch +
+      "&units=imperial&appid=630f6b0a5dd5632e93ad38bae7f3f14b";
     var apiResponseForcast;
     function API() {
       return $.ajax({
         url: queryURLforcast,
-        method: "GET"
-      })
+        method: "GET",
+      });
     }
     apiResponseForcast = await API();
     showForcastData(apiResponseForcast);
@@ -64,8 +65,6 @@ $(function () {
     $("#wind-speed").text("wind speed: " + apiResponseHour.wind.speed);
     lat = apiResponseHour.coord.lat;
     lon = apiResponseHour.coord.lon;
-    console.log(lat);
-    console.log(lon);
     initUv();
   }
 
@@ -84,11 +83,28 @@ $(function () {
     for (let i = 0; i <= dailyW.length - 8; i = i + 8) {
       date = new Date(dailyW[i].dt_txt);
       varDate = date.toLocaleDateString();
-        $("#tiles").append(
-          '<div class="col-2-xs m-2 text-left p-2 rounded bg-primary"><p>' + varDate + '</p><p class="p-b-0"><img src="./images/' + dailyW[i].weather[0].icon + '@2x.png"></p><p>temp: ' + dailyW[i].main.temp + '</p><p>humidity: ' + dailyW[i].main.humidity + '</p></div>'
-        );
+      $("#tiles").append(
+        '<div class="col-2-xs m-2 text-left p-2 rounded bg-primary"><p>' +
+          varDate +
+          '</p><p class="p-b-0"><img src="./images/' +
+          dailyW[i].weather[0].icon +
+          '@2x.png"></p><p>temp: ' +
+          dailyW[i].main.temp +
+          "</p><p>humidity: " +
+          dailyW[i].main.humidity +
+          "</p></div>"
+      );
     }
   }
+
+  const cityClick = (data) => {
+    let cityQuery =
+      "https://api.openweathermap.org/data/2.5/weather?q=" +
+      data +
+      "&appid=630f6b0a5dd5632e93ad38bae7f3f14b";
+    varCitySearch = data;
+    init(cityQuery);
+  };
 
   // draw the cicties list in the search window
   function drawCities() {
@@ -102,17 +118,25 @@ $(function () {
         var newP = $("<button></button>");
         newP.text(cityArray[i]);
         newP.attr("class", "btn btn-primary p-2 m-1");
+        newP.attr("id", `${cityArray[i]}`);
         $("#list-cities").append(newP);
+        $("#" + `${cityArray[i]}`).on("click", () => {
+          cityClick(cityArray[i]);
+        });
       }
     } else {
       cityArray.push(varCitySearch);
       localStorage.setItem("city-list", JSON.stringify(cityArray));
       $("#list-cities").empty();
       for (let i = 0; i < cityArray.length; i++) {
-        var newP = $("<p></p>");
-        newP.text(cityArray[i]);
-        newP.attr("class", "btn btn-primary p-2 m-1");
-        $("#list-cities").append(newP);
+        var newCity = $("<button></button>");
+        newCity.text(cityArray[i]);
+        newCity.attr("class", "btn btn-primary p-2 m-1");
+        newCity.attr("id", `${cityArray[i]}`);
+        $("#list-cities").append(newCity);
+        $("#" + `${cityArray[i]}`).on("click", () => {
+          cityClick(cityArray[i]);
+        });
       }
     }
   }
@@ -124,10 +148,15 @@ $(function () {
       cityArray = JSON.parse(localStorage.getItem("city-list"));
       $("#list-cities").empty();
       for (let i = 0; i < cityArray.length; i++) {
-        var newP = $("<p></p>");
+        var newP = $("<button></button>");
+        cityChoice = cityArray[i];
         newP.text(cityArray[i]);
-        newP.attr("class", "p-2 m-1 bg-white");
+        newP.attr("class", "btn btn-primary p-2 m-1");
+        newP.attr("id", `${cityArray[i]}`);
         $("#list-cities").append(newP);
+        $("#" + `${cityArray[i]}`).on("click", () => {
+          cityClick(cityArray[i]);
+        });
       }
       return true;
     }
@@ -138,14 +167,17 @@ $(function () {
   $("#submit").on("click", function (event) {
     event.preventDefault();
     varCitySearch = $("#city-input").val();
-    var queryURL = 'https://api.openweathermap.org/data/2.5/weather?q=' + varCitySearch + '&appid=630f6b0a5dd5632e93ad38bae7f3f14b';
+    var queryURL =
+      "https://api.openweathermap.org/data/2.5/weather?q=" +
+      varCitySearch +
+      "&appid=630f6b0a5dd5632e93ad38bae7f3f14b";
     async function initI(queryURL) {
       var apiResponse;
       function API() {
         return $.ajax({
           url: queryURL,
-          method: "GET"
-        })
+          method: "GET",
+        });
       }
       varCitySearch = $("#city-input").val();
       apiResponse = await API();
@@ -153,5 +185,5 @@ $(function () {
       drawCities();
     }
     initI(queryURL);
-  })
-}); 
+  });
+});
