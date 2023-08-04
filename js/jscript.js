@@ -1,5 +1,5 @@
 $(function () {
-  let varCitySearch = "Oakland";
+  let varCitySearch = "Chapel Hill";
   let queryURL =
     "https://api.openweathermap.org/data/2.5/weather?q=" +
     varCitySearch +
@@ -98,6 +98,7 @@ $(function () {
   }
 
   const cityClick = (data) => {
+    console.log("cityClick ", data);
     let cityQuery =
       "https://api.openweathermap.org/data/2.5/weather?q=" +
       data +
@@ -115,12 +116,14 @@ $(function () {
       localStorage.setItem("city-list", JSON.stringify(cityArray));
       $("#list-cities").empty();
       for (let i = 0; i < cityArray.length; i++) {
-        var newP = $("<button></button>");
-        newP.text(cityArray[i]);
+        let newP = $("<button></button>");
+        let cityId = cityArray[i].replace(/ /g, "_");
+        newP.text(cityId);
         newP.attr("class", "btn btn-primary p-2 m-1");
-        newP.attr("id", `${cityArray[i]}`);
+        newP.attr("id", cityId);
+        console.log("local storage ", cityId);
         $("#list-cities").append(newP);
-        $("#" + `${cityArray[i]}`).on("click", () => {
+        $("#" + cityId).on("click", () => {
           cityClick(cityArray[i]);
         });
       }
@@ -129,12 +132,14 @@ $(function () {
       localStorage.setItem("city-list", JSON.stringify(cityArray));
       $("#list-cities").empty();
       for (let i = 0; i < cityArray.length; i++) {
-        var newCity = $("<button></button>");
-        newCity.text(cityArray[i]);
+        let newCity = $("<button></button>");
+        let cityId = cityArray[i].replace(/ /g, "_");
+        newCity.text(cityId);
         newCity.attr("class", "btn btn-primary p-2 m-1");
-        newCity.attr("id", `${cityArray[i]}`);
+        newCity.attr("id", cityId);
+        console.log("no local storage ", cityId);
         $("#list-cities").append(newCity);
-        $("#" + `${cityArray[i]}`).on("click", () => {
+        $("#" + cityId).on("click", () => {
           cityClick(cityArray[i]);
         });
       }
@@ -148,13 +153,16 @@ $(function () {
       cityArray = JSON.parse(localStorage.getItem("city-list"));
       $("#list-cities").empty();
       for (let i = 0; i < cityArray.length; i++) {
-        var newP = $("<button></button>");
+        let newP = $("<button></button>");
+        let cityId = cityArray[i].replace(/ /g, "_");
         cityChoice = cityArray[i];
-        newP.text(cityArray[i]);
+        newP.text(cityId);
         newP.attr("class", "btn btn-primary p-2 m-1");
-        newP.attr("id", `${cityArray[i]}`);
+        newP.attr("id", cityId);
+        console.log("checkStorage local storage ", cityId);
         $("#list-cities").append(newP);
-        $("#" + `${cityArray[i]}`).on("click", () => {
+
+        $("#" + cityId).on("click", () => {
           cityClick(cityArray[i]);
         });
       }
