@@ -113,7 +113,6 @@ $(function () {
       $("#city-input").val("");
       cityArray = JSON.parse(localStorage.getItem("city-list"));
       if (!cityArray.includes(varCitySearch.toLowerCase())) {
-        console.log("localstorage  ---> ", varCitySearch);
         cityArray.push(varCitySearch);
         localStorage.setItem("city-list", JSON.stringify(cityArray));
         // return;
@@ -131,7 +130,6 @@ $(function () {
         });
       }
     } else {
-      console.log("no localstorage  ---> ", varCitySearch);
       cityArray.push(varCitySearch);
       localStorage.setItem("city-list", JSON.stringify(cityArray));
       $("#list-cities").empty();
@@ -153,10 +151,7 @@ $(function () {
     if (localStorage.length === 0) {
       return false;
     } else {
-      console.log("checkStorage --->");
       cityArray = JSON.parse(localStorage.getItem("city-list"));
-      console.log(cityArray);
-      console.log(varCitySearch);
       $("#list-cities").empty();
       for (let i = 0; i < cityArray.length; i++) {
         let newP = $("<button></button>");
@@ -177,6 +172,7 @@ $(function () {
 
   init(queryURL);
   checkStorage();
+
   $("#submit").on("click", function (event) {
     event.preventDefault();
     varCitySearch = $("#city-input").val();
