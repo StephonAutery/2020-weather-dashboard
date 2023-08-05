@@ -1,5 +1,6 @@
 $(function () {
-  let varCitySearch = "Chapel Hill";
+  submit;
+  let varCitySearch = "Oakland";
   let queryURL =
     "https://api.openweathermap.org/data/2.5/weather?q=" +
     varCitySearch +
@@ -98,7 +99,6 @@ $(function () {
   }
 
   const cityClick = (data) => {
-    console.log("cityClick ", data);
     let cityQuery =
       "https://api.openweathermap.org/data/2.5/weather?q=" +
       data +
@@ -107,13 +107,17 @@ $(function () {
     init(cityQuery);
   };
 
-  // draw the cicties list in the search window
+  // draw the cities list in the search window
   function drawCities() {
     if (localStorage.length > 0) {
       $("#city-input").val("");
       cityArray = JSON.parse(localStorage.getItem("city-list"));
-      cityArray.push(varCitySearch);
-      localStorage.setItem("city-list", JSON.stringify(cityArray));
+      if (!cityArray.includes(varCitySearch.toLowerCase())) {
+        console.log("localstorage  ---> ", varCitySearch);
+        cityArray.push(varCitySearch);
+        localStorage.setItem("city-list", JSON.stringify(cityArray));
+        // return;
+      }
       $("#list-cities").empty();
       for (let i = 0; i < cityArray.length; i++) {
         let newP = $("<button></button>");
@@ -121,13 +125,13 @@ $(function () {
         newP.text(cityId);
         newP.attr("class", "btn btn-primary p-2 m-1");
         newP.attr("id", cityId);
-        console.log("local storage ", cityId);
         $("#list-cities").append(newP);
         $("#" + cityId).on("click", () => {
           cityClick(cityArray[i]);
         });
       }
     } else {
+      console.log("no localstorage  ---> ", varCitySearch);
       cityArray.push(varCitySearch);
       localStorage.setItem("city-list", JSON.stringify(cityArray));
       $("#list-cities").empty();
@@ -137,7 +141,6 @@ $(function () {
         newCity.text(cityId);
         newCity.attr("class", "btn btn-primary p-2 m-1");
         newCity.attr("id", cityId);
-        console.log("no local storage ", cityId);
         $("#list-cities").append(newCity);
         $("#" + cityId).on("click", () => {
           cityClick(cityArray[i]);
@@ -150,7 +153,10 @@ $(function () {
     if (localStorage.length === 0) {
       return false;
     } else {
+      console.log("checkStorage --->");
       cityArray = JSON.parse(localStorage.getItem("city-list"));
+      console.log(cityArray);
+      console.log(varCitySearch);
       $("#list-cities").empty();
       for (let i = 0; i < cityArray.length; i++) {
         let newP = $("<button></button>");
@@ -159,7 +165,6 @@ $(function () {
         newP.text(cityId);
         newP.attr("class", "btn btn-primary p-2 m-1");
         newP.attr("id", cityId);
-        console.log("checkStorage local storage ", cityId);
         $("#list-cities").append(newP);
 
         $("#" + cityId).on("click", () => {
@@ -179,6 +184,7 @@ $(function () {
       "https://api.openweathermap.org/data/2.5/weather?q=" +
       varCitySearch +
       "&appid=630f6b0a5dd5632e93ad38bae7f3f14b";
+
     async function initI(queryURL) {
       var apiResponse;
       function API() {
@@ -187,11 +193,13 @@ $(function () {
           method: "GET",
         });
       }
+
       varCitySearch = $("#city-input").val();
       apiResponse = await API();
       init(queryURL);
       drawCities();
     }
+
     initI(queryURL);
   });
 });
