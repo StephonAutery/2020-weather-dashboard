@@ -130,6 +130,7 @@ $(function () {
         });
       }
     } else {
+      $("#city-input").val("");
       cityArray.push(varCitySearch);
       localStorage.setItem("city-list", JSON.stringify(cityArray));
       $("#list-cities").empty();
